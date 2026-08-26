@@ -149,6 +149,15 @@ export default function (pi: ExtensionAPI) {
 			}
 			if (entry.type === "session" || !entry.id || syncedEntryIds.has(entry.id)) continue;
 
+			// A rejected/failed entry never made it into the store, so any child
+			// referencing it as parentId would dangle the entries.parent_id FK —
+			// and every entry after THAT would too, cascading for the rest of the
+			// session on every future sync. Skip until the parent actually lands.
+			if (entry.parentId && !syncedEntryIds.has(entry.parentId)) {
+				failed = true;
+				continue;
+			}
+
 			const mapped = mapEntry(entry);
 			try {
 				const res = await sessionStorePost(config, `/sessions/${sessionId}/entries`, {
