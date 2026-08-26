@@ -1,0 +1,31 @@
+{
+  "name": "pi-session-store",
+  "version": "0.0.1",
+  "description": "Mirrors pi coding agent session transcripts to a remote session-store server.",
+  "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi",
+    "pi-coding-agent",
+    "extension",
+    "session"
+  ],
+  "author": "Joe Gatt",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gattjoe/pi-session-store.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gattjoe/pi-session-store/issues"
+  },
+  "homepage": "https://github.com/gattjoe/pi-session-store#readme",
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}
