@@ -15,6 +15,7 @@ Two environment variables (or their `PI_`-prefixed equivalents, e.g. `PI_SESSION
 | Variable | Required | Default |
 |---|---|---|
 | `SESSION_STORE_TOKEN` | Yes | none — the extension no-ops entirely if unset |
+| `SESSION_STORE_TOKEN_FILE` | No | Path to a file containing the token; used only if `SESSION_STORE_TOKEN` is unset |
 | `SESSION_STORE_URL` | No | `https://sessions.echobase.network` |
 
 Without a token configured, this extension does nothing (no network calls, no errors).

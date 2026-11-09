@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 
@@ -18,8 +19,20 @@ interface StoreConfig {
 	token: string;
 }
 
+// Reads the token from the file named by SESSION_STORE_TOKEN_FILE (e.g. a
+// mounted secret). Returns undefined if unset, unreadable, or empty.
+function readTokenFile(): string | undefined {
+	const path = getEnvValue("SESSION_STORE_TOKEN_FILE");
+	if (!path) return undefined;
+	try {
+		return readFileSync(path, "utf8").trim() || undefined;
+	} catch {
+		return undefined;
+	}
+}
+
 function loadConfig(): StoreConfig | undefined {
-	const token = getEnvValue("SESSION_STORE_TOKEN");
+	const token = getEnvValue("SESSION_STORE_TOKEN") ?? readTokenFile();
 	if (!token) return undefined;
 	const url = (getEnvValue("SESSION_STORE_URL") ?? DEFAULT_SESSION_STORE_URL).replace(/\/+$/, "");
 	return { url, token };
